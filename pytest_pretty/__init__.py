@@ -88,6 +88,11 @@ class CustomTerminalReporter(TerminalReporter):
                     else:
                         error_line = str(report.longrepr.reprcrash.lineno)
                         error = report.longrepr.reprcrash.message
+                        if error.startswith('assert'):
+                            error = 'AssertionError'
+                        else:
+                            fq_error = error.split(':')[0]
+                            error = fq_error.split('.')[-1]
 
                 except AttributeError:
                     error_line = ''

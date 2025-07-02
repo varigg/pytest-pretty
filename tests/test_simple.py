@@ -10,11 +10,9 @@ def test_add():
 def test_add_fail():
     assert 1 + 2 == 4
 
-    
 @pytest.mark.xfail(reason='This test is expected to fail')
 def test_subtract():
     assert 2 - 1 == 0
-
 
 @pytest.mark.skipif(True, reason='This test is skipped')
 def test_multiply():
@@ -45,9 +43,7 @@ def test_fixture_short(pytester_pretty):
     result = pytester_pretty.runpytest('--tb=short')
     result.assert_outcomes(passed=1, failed=1, skipped=1, xfailed=1)
     lines = result.outlines
-    assert any(
-        'test_add_fail' in line and '6' in line and '7' in line and 'assert (1 + 2) == 4' in line for line in lines
-    )
+    assert any('test_add_fail' in line and '6' in line and '7' in line and 'AssertionError' in line for line in lines)
 
 
 def test_fixture_line(pytester_pretty):
@@ -55,6 +51,4 @@ def test_fixture_line(pytester_pretty):
     result = pytester_pretty.runpytest('--tb=line')
     result.assert_outcomes(passed=1, failed=1, skipped=1, xfailed=1)
     lines = result.outlines
-    assert any(
-        'test_add_fail' in line and '6' in line and '7' in line and 'assert (1 + 2) == 4' in line for line in lines
-    )
+    assert any('test_add_fail' in line and '6' in line and '7' in line and 'AssertionError' in line for line in lines)
