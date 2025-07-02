@@ -88,7 +88,7 @@ class CustomTerminalReporter(TerminalReporter):
                     else:
                         error_line = str(report.longrepr.reprcrash.lineno)
                         error = report.longrepr.reprcrash.message
-                    
+
                 except AttributeError:
                     error_line = ''
                     error = ''
