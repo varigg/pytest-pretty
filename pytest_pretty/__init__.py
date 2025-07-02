@@ -81,13 +81,17 @@ class CustomTerminalReporter(TerminalReporter):
             for report in fail_reports:
                 file, function_line, func = report.location
                 try:
-                    repr_entries = report.longrepr.chain[-1][0].reprentries
-                    error_line = str(repr_entries[0].reprfileloc.lineno)
-                    error = repr_entries[-1].reprfileloc.message
+                    if report.longrepr.reprtraceback.style == 'long':
+                        repr_entries = report.longrepr.chain[-1][0].reprentries
+                        error_line = str(repr_entries[0].reprfileloc.lineno)
+                        error = repr_entries[-1].reprfileloc.message
+                    else:
+                        error_line = str(report.longrepr.reprcrash.lineno)
+                        error = report.longrepr.reprcrash.message
+                    
                 except AttributeError:
                     error_line = ''
                     error = ''
-
                 table.add_row(
                     escape(file),
                     escape(func),
